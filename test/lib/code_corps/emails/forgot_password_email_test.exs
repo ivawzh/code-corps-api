@@ -11,5 +11,7 @@ defmodule CodeCorps.Emails.ForgotPasswordEmailTest do
     email = ForgotPasswordEmail.create(user, token)
     assert email.from == "Code Corps<team@codecorps.org>"
     assert email.to == user.email
+    { :link, encoded_link } = email.private.template_model |> Enum.at(0)
+    assert "#{Application.get_env(:code_corps, :site_url)}/password/reset?token=#{token}" == encoded_link
   end
 end
