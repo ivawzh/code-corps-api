@@ -481,6 +481,45 @@ Until the Code Corps platform is open to new organizations, only admin users can
 
     + Attributes (Unprocessable Entity Response)
 
+# Group Password
+
+This endpoint is a parent route for reset and forgot password endpoints
+
+
+## Reset [/reset]
+
+### Reset Password [POST]
+
++ Request
+
+    + Headers
+
+            Accept: application/vnd.api+json
+            Authorization: Bearer <token>
+
++ Response 201 (application/vnd.api+json; charset=utf-8)
+
+    + Attributes (Reset Password Response)
+
++ Response 422 (application/vnd.api+json; charset=utf-8)
+
+    + Attributes (Unprocessable Entity Response)
+
+## Forgot [/forgot]
+
+### Forgot Password [POST]
+
++ Request
+
+    + Headers
+
+            Accept: application/vnd.api+json
+            Authorization: Bearer <token>
+
++ Response 200 (application/vnd.api+json; charset=utf-8)
+
+    + Attributes (Forgot Password Response)
+
 # Group Previews
 
 Preview resources allow a user to create a temporary HTML preview for any kind of markdown.
@@ -2623,6 +2662,28 @@ The platform stores Stripe customers and cards so they can be reused across diff
 
 ## Organizations Response (object)
 + data(array[Organization Resource])
++ include JSON API Version
+
+## Forgot Password Resource (object)
++ include Forgot Password Resource Identifier
+
+## Forgot Password Resource Identifier
++ email: `myemail@gmail.com` (string, required)
+
+## Forgot Password Response (object)
++ data(Forgot Password Resource)
++ include JSON API Version
+
+## Reset Password Resource (object)
++ include Reset Password Resource Identifier
+
+## Reset Password Resource Identifier
++ token: `xxxx` (string, required)
++ password: `mypassword` (string, required)
++ passwordConfirmation: `mypassword` (string, required)
+
+## Reset Password Response (object)
++ data(Reset Password Resource)
 + include JSON API Version
 
 ## Project User Attributes (object)
