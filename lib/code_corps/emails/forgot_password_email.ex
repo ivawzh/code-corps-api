@@ -2,7 +2,7 @@ defmodule CodeCorps.Emails.ForgotPasswordEmail do
   import Bamboo.Email
   import Bamboo.PostmarkHelper
 
-  alias CodeCorps.{Emails.BaseEmail, AuthToken}
+  alias CodeCorps.Emails.BaseEmail
 
   def create(user, token) do
     BaseEmail.create

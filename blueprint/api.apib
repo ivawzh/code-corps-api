@@ -492,14 +492,14 @@ This endpoint is a parent route for reset and forgot password endpoints
 
 + Request
 
+    + Attributes (Reset Password Request)
+
     + Headers
 
             Accept: application/vnd.api+json
             Authorization: Bearer <token>
 
 + Response 201 (application/vnd.api+json; charset=utf-8)
-
-    + Attributes (Reset Password Response)
 
 + Response 422 (application/vnd.api+json; charset=utf-8)
 
@@ -511,6 +511,8 @@ This endpoint is a parent route for reset and forgot password endpoints
 
 + Request
 
+    + Attributes (Forgot Password Request)
+
     + Headers
 
             Accept: application/vnd.api+json
@@ -518,7 +520,6 @@ This endpoint is a parent route for reset and forgot password endpoints
 
 + Response 200 (application/vnd.api+json; charset=utf-8)
 
-    + Attributes (Forgot Password Response)
 
 # Group Previews
 
@@ -2670,7 +2671,7 @@ The platform stores Stripe customers and cards so they can be reused across diff
 ## Forgot Password Resource Identifier
 + email: `myemail@gmail.com` (string, required)
 
-## Forgot Password Response (object)
+## Forgot Password Request (object)
 + data(Forgot Password Resource)
 + include JSON API Version
 
@@ -2682,7 +2683,7 @@ The platform stores Stripe customers and cards so they can be reused across diff
 + password: `mypassword` (string, required)
 + passwordConfirmation: `mypassword` (string, required)
 
-## Reset Password Response (object)
+## Reset Password Request (object)
 + data(Reset Password Resource)
 + include JSON API Version
 
