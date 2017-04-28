@@ -485,26 +485,6 @@ Until the Code Corps platform is open to new organizations, only admin users can
 
 This endpoint is a parent route for reset and forgot password endpoints
 
-
-## Reset [/reset]
-
-### Reset Password [POST]
-
-+ Request
-
-    + Attributes (Reset Password Request)
-
-    + Headers
-
-            Accept: application/vnd.api+json
-            Authorization: Bearer <token>
-
-+ Response 201 (application/vnd.api+json; charset=utf-8)
-
-+ Response 422 (application/vnd.api+json; charset=utf-8)
-
-    + Attributes (Unprocessable Entity Response)
-
 ## Forgot [/forgot]
 
 ### Forgot Password [POST]
@@ -519,7 +499,6 @@ This endpoint is a parent route for reset and forgot password endpoints
             Authorization: Bearer <token>
 
 + Response 200 (application/vnd.api+json; charset=utf-8)
-
 
 # Group Previews
 
@@ -2673,18 +2652,6 @@ The platform stores Stripe customers and cards so they can be reused across diff
 
 ## Forgot Password Request (object)
 + data(Forgot Password Resource)
-+ include JSON API Version
-
-## Reset Password Resource (object)
-+ include Reset Password Resource Identifier
-
-## Reset Password Resource Identifier
-+ token: `xxxx` (string, required)
-+ password: `mypassword` (string, required)
-+ passwordConfirmation: `mypassword` (string, required)
-
-## Reset Password Request (object)
-+ data(Reset Password Resource)
 + include JSON API Version
 
 ## Project User Attributes (object)
