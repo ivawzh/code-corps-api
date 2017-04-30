@@ -1,7 +1,7 @@
 defmodule CodeCorps.PasswordResetController do
   use CodeCorps.Web, :controller
 
-  alias CodeCorps.{User,AuthToken}
+  alias CodeCorps.{User,AuthToken, TokenController}
   alias Ecto.Changeset
 
   @doc"""
@@ -14,11 +14,11 @@ defmodule CodeCorps.PasswordResetController do
     user = conn.assigns.current_user
     with %AuthToken{value: auth_token} <- Repo.get_by(CodeCorps.AuthToken, %{ value: token, user_id: user.id }),
       {:ok, _} <- Phoenix.Token.verify(CodeCorps.Endpoint, "user", auth_token, max_age: 1209600) do
-        with %Changeset{valid?: true} <- User.reset_password_changeset(user, 
-                                                                       %{password: password, password_confirmation: password_confirmation}) do
+        with %Changeset{valid?: true} = changeset <- User.reset_password_changeset(user, 
+                                                                       %{password: password, password_confirmation: password_confirmation}),
+             {:ok, user} <- Repo.update(changeset) do
           conn
-          |> put_status(:created)
-          |> render("show.json", email: user.email)
+          |> TokenController.create(%{"username" => user.email, "password" => password})
         else
           %Changeset{valid?: false} -> 
             handle_reset_pswd_result(conn)
