@@ -13,7 +13,7 @@ defmodule CodeCorps.PasswordResetController do
   def reset_password(conn, %{"token" => token, "password" => password, "password_confirmation" => password_confirmation}) do
     with %AuthToken{value: auth_token, user_id: user_id} <- Repo.get_by(CodeCorps.AuthToken, %{ value: token }),
       {:ok, _} <- Phoenix.Token.verify(CodeCorps.Endpoint, "user", auth_token, max_age: 1209600) do
-        user = Repo.get_by(User, id: user_id)
+        user = Repo.get(User, user_id)
         with %Changeset{valid?: true} = changeset <- User.reset_password_changeset(user, 
                                                                        %{password: password, password_confirmation: password_confirmation}),
              {:ok, user} <- Repo.update(changeset) do
