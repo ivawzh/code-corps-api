@@ -28,7 +28,7 @@ defmodule CodeCorps.PasswordResetControllerTest do
     {:ok, _} = AuthToken.changeset(%AuthToken{}, current_user) |> Repo.insert
     attrs = %{"token" => "random token", "password" => "123456", "password_confirmation" => "123456"}
     conn = post conn, password_reset_path(conn, :reset_password), attrs
-    assert json_response(conn, 422)
+    assert json_response(conn, 404)
   end
 
 end
