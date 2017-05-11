@@ -21,7 +21,7 @@ defmodule CodeCorps.PasswordResetController do
       |> put_status(:created)
       |> render("show.json", token: auth_token, user_id: updated_user.id, email: updated_user.email)
     else
-      {:error, %Changeset{} = _changeset} -> conn |> put_status(422) |> render(CodeCorps.ErrorView, "422.json")
+      {:error, %Changeset{} = changeset} -> conn |> put_status(422) |> render(CodeCorps.ErrorView, :errors, data: changeset)
       nil -> conn |> put_status(:not_found) |> render(CodeCorps.ErrorView, "404.json")
     end
   end
