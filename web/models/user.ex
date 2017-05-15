@@ -30,9 +30,10 @@ defmodule CodeCorps.User do
     field :twitter, :string
     field :username, :string
     field :website, :string
-    field :github_id, :string
     field :state, :string, default: "signed_up"
     field :state_transition, :string, virtual: true
+
+    field :github_auth_token, :string
 
     has_one :slugged_route, SluggedRoute
 
@@ -97,8 +98,8 @@ defmodule CodeCorps.User do
 
   def github_associate_changeset(struct, params) do
     struct
-    |> cast(params, [:github_id])
-    |> validate_required([:github_id])
+    |> cast(params, [:github_auth_token])
+    |> validate_required([:github_auth_token])
   end
 
   def reset_password_changeset(struct, params) do

@@ -3,11 +3,11 @@ defmodule CodeCorps.GithubTest do
   alias CodeCorps.Github
 
   describe "associate/2" do
-    test "should update the user with the github_id" do
+    test "should update the user with the github_auth_token" do
       user = insert(:user)
-      params = %{github_id: "foobar"}
+      params = %{github_auth_token: "foobar"}
       {:ok, result} = Github.associate(user, params)
-      assert result.github_id == "foobar"
+      assert result.github_auth_token == "foobar"
     end
 
     test "should return the error with a changeset" do

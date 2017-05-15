@@ -2,38 +2,33 @@ defmodule CodeCorps.Github do
 
   alias CodeCorps.{User, Repo}
 
-  @token_url ""
-  @client_id ""
-  @client_secret ""
+  @api Application.get_env(:code_corps, :github_api)
 
   @doc """
-  Temporary function until the actual behavior is implemented.
+  Posts code to github to receive an auth token, associates user with that
+  auth token.
+
+  Returns one of the following:
+
+  - {:ok, %CodeCorps.User{}}
+  - {:error, %Ecto.Changeset{}}
+  - {:error, "some_github_error"}
   """
   def connect(user, code) do
-    github_post(code)
-    |> Tentacat.Client.new
-    |> Tentacat.Users.me
-    |> update_user(user)
-  end
-
-  defp update_user(%{github_id: _github_id} = github_info, user) do
-    associate(user, github_info)
-  end
-
-  defp github_post(code) do
-    with {:ok, response_struct} <- Tentacat.post(@token_url, %{
-      client_id: @client_id,
-      client_secret: @client_secret,
-      code: code,
-      accept: :json
-    }) 
-    do
-      %{access_token: _access_token} = Tentacat.process_response(response_struct)
-    else
-      {:error, error_struct} -> error_struct
+    case code |> @api.connect do
+      {:ok, github_auth_token} -> user |> associate(%{github_auth_token: github_auth_token})
+      {:error, error} -> {:error, error}
     end
   end
 
+  @doc """
+  Associates user with an auth token
+
+  Returns one of the following:
+
+  - {:ok, %CodeCorps.User{}}
+  - {:error, %Ecto.Changeset{}}
+  """
   def associate(user, params) do
     user
     |> User.github_associate_changeset(params)
